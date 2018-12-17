@@ -16,4 +16,7 @@ export class RoutesService {
     return this.http.get(this.baseUrl + "stations");
   }
 
+  public getShortestRoutes(from, to, numberOfPaths): Observable<any> {
+    return this.http.get(`${this.baseUrl}${from}/${to}/${numberOfPaths}`);
+  }
 }
