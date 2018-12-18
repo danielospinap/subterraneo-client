@@ -3,6 +3,23 @@
     Metro Subterráneo
   </h1>
 
+  <div *ngIf="!shortestRoutes && map" >
+    <svg viewBox="0 0 600 400" preserveAspectRatio="xMinYMid meet" class="svgMethyne" style="background-color: rgb(255, 255, 255);">
+
+      <g *ngFor="let edge of map.edges; let i = index" class="link">
+        <line class="center" [attr.x1]="edge.x1" [attr.y1]="edge.y1"
+          [attr.x2]="edge.x2" [attr.y2]="edge.y2" [style.stroke]="edge.color"
+          style="stroke-width: 2px;"></line>
+      </g>
+
+      <g *ngFor="let station of map.stations" class="node" [ngStyle]="{'transform': 'translate(' + station.posX + 'px , ' + station.posY + 'px)'}">
+        <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #2aa9cc;"></circle><text
+          dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">{{station.name}}</text><text
+          dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
+      </g>
+    </svg>
+  </div>
+
   <mat-tab-group *ngIf="shortestRoutes">
     <mat-tab *ngFor="let route of shortestRoutes; let j = index" label="Ruta {{j+1}}">
       <svg viewBox="0 0 600 400" preserveAspectRatio="xMinYMid meet" class="svgMethyne" style="background-color: rgb(255, 255, 255);">
