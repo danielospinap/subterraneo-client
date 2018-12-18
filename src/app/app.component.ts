@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
   shortestRoutes;
   map;
 
+  step = 1;
+
   spaceBetweenEdges = 3
 
   constructor(private routesService: RoutesService) { }
@@ -34,6 +36,24 @@ export class AppComponent implements OnInit {
       this.separateEdges();
     })
 
+  }
+
+  clickedStation(station) {   
+    
+    if(this.step === 1) {
+      this.selectedOriginStation = station.id;
+      this.step = 2;
+    } else if (this.step === 2) {
+      this.selectedDestinationStation = station.id;
+      this.calculateRoutes();
+      this.step = 3;
+    }
+    
+  }
+
+  restart() {
+    this.step = 1;
+    this.shortestRoutes = undefined;
   }
 
   calculateRoutes() {

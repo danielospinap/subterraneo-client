@@ -1,7 +1,11 @@
 <div style="text-align:center">
-  <h1>
+  <h1 (click)="restart()" >
     Metro Subterráneo
   </h1>
+
+  <h2 *ngIf="step === 1" >Selecciona tu estación de partida:</h2>
+  <h2 *ngIf="step === 2" >Selecciona tu estación de destino:</h2>
+  <h2 *ngIf="step === 3" >Estas son tus mejores rutas:</h2>
 
   <div *ngIf="!shortestRoutes && map" >
     <svg viewBox="0 0 600 400" preserveAspectRatio="xMinYMid meet" class="svgMethyne" style="background-color: rgb(255, 255, 255);">
@@ -12,7 +16,7 @@
           style="stroke-width: 2px;"></line>
       </g>
 
-      <g *ngFor="let station of map.stations" class="node" [ngStyle]="{'transform': 'translate(' + station.posX + 'px , ' + station.posY + 'px)'}">
+      <g *ngFor="let station of map.stations" (click)="clickedStation(station)" class="node" [ngStyle]="{'transform': 'translate(' + station.posX + 'px , ' + station.posY + 'px)'}">
         <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #2aa9cc;"></circle><text
           dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">{{station.name}}</text><text
           dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
@@ -38,167 +42,5 @@
       </svg>
     </mat-tab>
   </mat-tab-group>
-  <div *ngIf="shortestRoutes">
-
-    <!-- 
-      <g *ngFor="let node of route.paht; let i = index" class="link">
-        <line *ngIf="i < route.paht.lenght-1" class="center" [attr.x1]="node.station.posX" [attr.y1]="node.station.posY" 
-        [attr.x2]="route.paht[i+1].station.posX" [attr.y2]="route.paht[i+1].station.posY"
-        [style.stroke]="node.route.color" style="stroke-width: 2px;"></line>
-      </g> -->
-
-
-    <!-- <g class="node" transform="translate(40,60)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">1</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(140,100)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">2</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(240,70)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">3</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(310,150)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">7</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(370,40)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">4</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(470,40)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">5</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(500,140)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">6</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(120,220)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">11</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(50,130)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">10</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(450,200)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">8</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(230,210)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">9</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(70,340)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">12</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(210,350)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">13</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(360,300)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">14</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(550,320)">
-      <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #ffffff;"></circle><text dy=".35em"
-        class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">15</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g> -->
-
-
-    <!--  -->
-    <!--  -->
-    <!--  -->
-
-
-
-    <!-- <g class="link">
-      <line class="center" x1="159.85862208412632" y1="181.78600273405752" x2="205.84569000313076" y2="226.81064354998702"
-        style="stroke: rgb(0, 0, 0); stroke-width: 2px;"></line>
-    </g>
-    <g class="link">
-      <line class="center" x1="149.89380832758778" y1="107.23885362480861" x2="95.30899874687208" y2="71.56002318745635"
-        style="stroke: rgb(0, 0, 0); stroke-width: 2px;"></line>
-    </g>
-    <g class="link">
-      <line class="right" x1="159.85862208412632" y1="181.78600273405752" x2="149.89380832758778" y2="107.23885362480861"
-        transform="translate(-3.6785340212746065,0.5214659787253934)" style="stroke: rgb(0, 0, 0); stroke-width: 2px;"></line>
-      <line class="left" x1="159.85862208412632" y1="181.78600273405752" x2="149.89380832758778" y2="107.23885362480861"
-        transform="translate(3.6785340212746065,-0.5214659787253934)" style="stroke: rgb(0, 0, 0); stroke-width: 2px;"></line>
-      <line class="right2" x1="159.85862208412632" y1="181.78600273405752" x2="149.89380832758778" y2="107.23885362480861"
-        transform="translate(-11.03560206382382,1.5643979361761802)" style="stroke: rgb(0, 0, 0); stroke-width: 2px;"></line>
-      <line class="left2" x1="159.85862208412632" y1="181.78600273405752" x2="149.89380832758778" y2="107.23885362480861"
-        transform="translate(11.03560206382382,-1.5643979361761802)" style="stroke: rgb(0, 0, 0); stroke-width: 2px;"></line>
-    </g>
-
-    <g class="node" transform="translate(159.85862208412632,181.78600273405752)">
-      <circle class="atoms" stroke-width="1px" r="20.793874097916436" style="stroke: rgb(0, 0, 0); fill: rgb(42, 169, 204);"></circle><text
-        dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">C</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(205.84569000313076,226.81064354998702)">
-      <circle class="atoms" stroke-width="1px" r="6.023772904085943" style="stroke: rgb(0, 0, 0); fill: rgb(252, 247, 138);"></circle><text
-        dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">H</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(149.89380832758778,107.23885362480861)">
-      <circle class="atoms" stroke-width="1px" r="20.793874097916436" style="stroke: rgb(0, 0, 0); fill: rgb(42, 169, 204);"></circle><text
-        dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">C</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g>
-    <g class="node" transform="translate(95,71.56002318745635)">
-      <circle class="atoms" stroke-width="1px" r="6.023772904085943" style="stroke: rgb(0, 0, 0); fill: rgb(252, 247, 138);"></circle><text
-        dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">H</text><text
-        dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-    </g> -->
-
-
-  </div>
-
-
-  <img width="50%" alt="Angular Logo" src="assets/mapa.png">
-</div>
-<h2>Ingresa la estación de partida: </h2>
-<select name="from" id="from" [(ngModel)]="selectedOriginStation">
-  <option *ngFor="let station of stations">{{station.name}}</option>
-</select>
-
-
-
-
-
-<h2>Ingresa la estación de destino:</h2>
-<select name="to" id="to" [(ngModel)]="selectedDestinationStation">
-  <option *ngFor="let station of stations">{{station.name}}</option>
-</select>
-<br>
-<br>
-<br>
-<button (click)="calculateRoutes()">Calcular Ruta</button>
-
-<div *ngIf="shortestRoutes && shortestRoutes.lenght > 0">
-  <h2>Las mejores rutas son:</h2>
-  <div *ngFor="let route of shortestRoutes">
-    {{route.path}}
-    <p>El tiempo promedio es de {{route.time}} minutos.</p>
-  </div>
+  
 </div>
