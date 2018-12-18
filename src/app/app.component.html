@@ -25,7 +25,7 @@
   </div>
 
   <mat-tab-group *ngIf="shortestRoutes">
-    <mat-tab *ngFor="let route of shortestRoutes; let j = index" label="Ruta {{j+1}}">
+    <mat-tab *ngFor="let route of shortestRoutes; let j = index" label="Ruta con tiempo promedio: {{route.time}} minutos">
       <svg viewBox="0 0 600 400" preserveAspectRatio="xMinYMid meet" class="svgMethyne" style="background-color: rgb(255, 255, 255);">
 
         <g *ngFor="let node of route.paht; let i = index" class="link">
