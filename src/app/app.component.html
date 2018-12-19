@@ -7,6 +7,8 @@
   <h2 *ngIf="step === 2" >Selecciona tu estación de destino:</h2>
   <h2 *ngIf="step === 3" >Estas son tus mejores rutas:</h2>
 
+  <h3 *ngIf="originEqualToDestination" style="color: #ff0000" >La estación de destino debe ser diferente a la de partida.</h3>
+
   <div *ngIf="!shortestRoutes && map" >
     <svg viewBox="0 0 600 400" preserveAspectRatio="xMinYMid meet" class="svgMethyne" style="background-color: rgb(255, 255, 255);">
 

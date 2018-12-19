@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
 
   step = 1;
 
+  originEqualToDestination = false;
   spaceBetweenEdges = 3
 
   constructor(private routesService: RoutesService) { }
@@ -39,21 +40,31 @@ export class AppComponent implements OnInit {
   }
 
   clickedStation(station) {   
-    
-    if(this.step === 1) {
-      this.selectedOriginStation = station.id;
-      this.step = 2;
-    } else if (this.step === 2) {
-      this.selectedDestinationStation = station.id;
-      this.calculateRoutes();
-      this.step = 3;
+    if (station.id === this.selectedOriginStation) {
+      this.originEqualToDestination = true;
+    } else {
+      if(this.step === 1) {
+        this.selectedOriginStation = station.id;
+        this.step = 2;
+      } else if (this.step === 2) {
+        this.selectedDestinationStation = station.id;
+        this.calculateRoutes();
+        this.step = 3;
+        this.originEqualToDestination = false;
+        this.selectedOriginStation = -1;
+        this.selectedDestinationStation = -1;
+      }
     }
+    
     
   }
 
   restart() {
     this.step = 1;
     this.shortestRoutes = undefined;
+    this.originEqualToDestination = false;
+    this.selectedOriginStation = -1;
+    this.selectedDestinationStation = -1;
   }
 
   calculateRoutes() {
@@ -127,35 +138,6 @@ export class AppComponent implements OnInit {
         newEdges.push(edge);
       });
     });
-
-    // arraysOfEdges.forEach((arrayOfEdges: Array<any>) => {
-    //   let x1: number;
-    //   let y1: number;
-    //   let x2: number;
-    //   let y2: number;
-
-
-      // if (arrayOfEdges.length % 2 === 1) {
-      //   x1 = arrayOfEdges[0].x1 - (((arrayOfEdges.length - 1) / 2) * this.spaceBetweenEdges);
-      //   y1 = arrayOfEdges[0].y1 - (((arrayOfEdges.length - 1) / 2) * this.spaceBetweenEdges);
-      //   x2 = arrayOfEdges[0].x2 - (((arrayOfEdges.length - 1) / 2) * this.spaceBetweenEdges);
-      //   y2 = arrayOfEdges[0].y2 - (((arrayOfEdges.length - 1) / 2) * this.spaceBetweenEdges);
-      // }
-
-    //   arrayOfEdges.forEach(edge => {
-    //     edge.x1 = x1;
-    //     edge.y1 = y1;
-    //     edge.x2 = x2;
-    //     edge.y2 = y2;
-
-    //     x1 = x1 + this.spaceBetweenEdges;
-    //     y1 = y1 + this.spaceBetweenEdges;
-    //     x2 = x2 + this.spaceBetweenEdges;
-    //     y2 = y2 + this.spaceBetweenEdges;
-
-    //     newEdges.push(edge);
-    //   });
-    // });
 
     this.map.edges = newEdges;
   }
