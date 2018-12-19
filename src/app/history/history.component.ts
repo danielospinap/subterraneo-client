@@ -8,7 +8,7 @@ import { RoutesService } from "../services/routes/routes.service";
 })
 export class HistoryComponent implements OnInit {
 
-  queries: [];
+  queries;
   displayedColumns = ['originStation', 'destinationStation', 'times'];
 
   constructor(private routesService: RoutesService) { }
