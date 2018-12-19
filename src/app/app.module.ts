@@ -4,6 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { HistoryComponent } from './history/history.component';
     FormsModule,
     MatTabsModule,
     MatTableModule,
+    MatButtonModule,
     BrowserAnimationsModule,
     AppRoutingModule
   ],

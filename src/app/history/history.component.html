@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="queries" class="mat-elevation-z8">
+<table *ngIf="queries" mat-table [dataSource]="queries" class="mat-elevation-z8">
 
   <ng-container matColumnDef="originStation">
     <th mat-header-cell *matHeaderCellDef> Estación de origen </th>
