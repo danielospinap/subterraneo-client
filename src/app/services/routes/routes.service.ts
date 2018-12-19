@@ -23,4 +23,8 @@ export class RoutesService {
   public getMap(): Observable<any> {
     return this.http.get(this.baseUrl + "map");
   }
+
+  public getHistory(): Observable<any> {
+    return this.http.get(this.baseUrl + "history")
+  }
 }

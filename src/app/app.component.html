@@ -1,48 +1,6 @@
-<div style="text-align:center">
-  <h1 (click)="restart()" >
-    Metro Subterráneo
-  </h1>
+<nav>
+  <a mat-button color="primary" routerLink="/map" >Ir al mapa</a>
+  <a mat-button color="primary" routerLink="/history" >Ver historial</a>
+</nav>
 
-  <h2 *ngIf="step === 1" >Selecciona tu estación de partida:</h2>
-  <h2 *ngIf="step === 2" >Selecciona tu estación de destino:</h2>
-  <h2 *ngIf="step === 3" >Estas son tus mejores rutas:</h2>
-
-  <h3 *ngIf="originEqualToDestination" style="color: #ff0000" >La estación de destino debe ser diferente a la de partida.</h3>
-
-  <div *ngIf="!shortestRoutes && map" >
-    <svg viewBox="0 0 600 400" preserveAspectRatio="xMinYMid meet" class="svgMethyne" style="background-color: rgb(255, 255, 255);">
-
-      <g *ngFor="let edge of map.edges; let i = index" class="link">
-        <line class="center" [attr.x1]="edge.x1" [attr.y1]="edge.y1"
-          [attr.x2]="edge.x2" [attr.y2]="edge.y2" [style.stroke]="edge.color"
-          style="stroke-width: 2px;"></line>
-      </g>
-
-      <g *ngFor="let station of map.stations" (click)="clickedStation(station)" class="node" [ngStyle]="{'transform': 'translate(' + station.posX + 'px , ' + station.posY + 'px)'}">
-        <circle class="atoms" stroke-width="1px" r="20" style="stroke: rgb(0, 0, 0); fill: #2aa9cc;"></circle><text
-          dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">{{station.name}}</text><text
-          dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-      </g>
-    </svg>
-  </div>
-
-  <mat-tab-group *ngIf="shortestRoutes">
-    <mat-tab *ngFor="let route of shortestRoutes; let j = index" label="Ruta con tiempo promedio: {{route.time}} minutos">
-      <svg viewBox="0 0 600 400" preserveAspectRatio="xMinYMid meet" class="svgMethyne" style="background-color: rgb(255, 255, 255);">
-
-        <g *ngFor="let node of route.paht; let i = index" class="link">
-          <line *ngIf="i < (route.paht.length -1)" class="center" [attr.x1]="node.station.posX" [attr.y1]="node.station.posY"
-            [attr.x2]="route.paht[i+1].station.posX" [attr.y2]="route.paht[i+1].station.posY" [style.stroke]="node.route.color"
-            style="stroke-width: 2px;"></line>
-        </g>
-
-        <g *ngFor="let node2 of route.paht" class="node" [ngStyle]="{'transform': 'translate(' + node2.station.posX + 'px , ' + node2.station.posY + 'px)'}">
-          <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #2aa9cc;"></circle><text
-            dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">{{node2.station.name}}</text><text
-            dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
-        </g>
-      </svg>
-    </mat-tab>
-  </mat-tab-group>
-  
-</div>
+<router-outlet></router-outlet>
