@@ -3,20 +3,28 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material';
+import {MatTableModule} from '@angular/material/table';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { MapComponent } from './map/map.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MapComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     MatTabsModule,
-    BrowserAnimationsModule
+    MatTableModule,
+    BrowserAnimationsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
