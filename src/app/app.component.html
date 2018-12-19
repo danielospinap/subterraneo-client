@@ -17,7 +17,7 @@
       </g>
 
       <g *ngFor="let station of map.stations" (click)="clickedStation(station)" class="node" [ngStyle]="{'transform': 'translate(' + station.posX + 'px , ' + station.posY + 'px)'}">
-        <circle class="atoms" stroke-width="1px" r="15" style="stroke: rgb(0, 0, 0); fill: #2aa9cc;"></circle><text
+        <circle class="atoms" stroke-width="1px" r="20" style="stroke: rgb(0, 0, 0); fill: #2aa9cc;"></circle><text
           dy=".35em" class="atomsText" text-anchor="middle" fill="#000000" style="font-size: 0.85em; pointer-events: none;">{{station.name}}</text><text
           dy="-.40em" dx=".50em" class="atomsText" text-anchor="start" fill="#000000" style="font-size: 0.85em; pointer-events: none;"></text>
       </g>
